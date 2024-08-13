@@ -1,0 +1,28 @@
+﻿<!--//1.0.8991.*//-->
+<UserControl x:Class="WpfMvvmUserControlRestore.Views.UserControls.SecondUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfMvvmUserControlRestore.Views.UserControls"
+             xmlns:vm="clr-namespace:WpfMvvmUserControlRestore.ViewModels"
+             mc:Ignorable="d" 
+             d:DataContext="{x:Type vm:SecondViewModel}"
+             d:DesignHeight="150"
+             d:DesignWidth="300"
+             >
+   <Grid Background="Aqua">
+      <Grid.ColumnDefinitions>
+         <ColumnDefinition/>
+         <ColumnDefinition Width="4*"/>
+         <ColumnDefinition/>
+      </Grid.ColumnDefinitions>
+     <StackPanel Grid.Column="1">
+         <ListBox Margin="10" 
+               ItemsSource="{Binding SecondProperty}" 
+               SelectedItem="{Binding SelectedRow}"/>
+         <TextBox Text="{Binding SelectedRow}" 
+               VerticalAlignment="Center" Margin="10"/>
+      </StackPanel>
+   </Grid>
+</UserControl>
