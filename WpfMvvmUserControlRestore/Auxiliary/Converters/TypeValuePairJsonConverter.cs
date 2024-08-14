@@ -1,6 +1,7 @@
-﻿//1.0.8991.*//
+﻿//1.0.8992.*:1.0.8991.*//
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using WpfMvvmUserControlRestore.Auxiliary.Helpers;
 using WpfMvvmUserControlRestore.Services.Settings;
 using WpfMvvmUserControlRestore.ViewModels;
 
@@ -13,8 +14,23 @@ namespace WpfMvvmUserControlRestore.Auxiliary.Converters
    {
       #region Fields
 
+      #region Debug
+#if DEBUG
+#pragma warning disable 0649
+      private static readonly int? debugBranch = 1;
+#pragma warning restore 0649
+#endif
+      #endregion Debug
+
       /// <summary> Список имен типов, допустимых для преобразования. </summary>
-      private readonly List<string> KnownTypes = ["Int32", "FirstViewModel", "String"];
+      private readonly List<string> KnownTypes = [
+         "Int32", 
+         "FirstViewModel",
+         "SecondViewModel",
+         "SelectorEnum", 
+         "String",
+         "ThirdViewModel"
+      ];
 
       #endregion Fields
 
@@ -60,10 +76,21 @@ namespace WpfMvvmUserControlRestore.Auxiliary.Converters
                      break;
                   case "FirstViewModel":
                      value = JsonSerializer.Deserialize<FirstViewModel>(ref reader)
-                       ?? throw new NullReferenceException("Ошибка десериализации. FirstViewModel не может быть null.");
+                       ?? throw new NullReferenceException($"Ошибка десериализации. {type} не может быть null.");
+                     break;
+                 case "SecondViewModel":
+                     value = JsonSerializer.Deserialize<SecondViewModel>(ref reader)
+                       ?? throw new NullReferenceException($"Ошибка десериализации. {type} не может быть null.");
+                     break;
+                  case "SelectorEnum":
+                     value = JsonSerializer.Deserialize<SelectorEnum>(ref reader);
                      break;
                   case "String":
                      value = reader.GetString() ?? "";
+                     break;
+                  case "ThirdViewModel":
+                     value = JsonSerializer.Deserialize<ThirdViewModel>(ref reader)
+                       ?? throw new NullReferenceException($"Ошибка десериализации. {type} не может быть null.");
                      break;
                }
                tvp = new(value);
@@ -85,6 +112,16 @@ namespace WpfMvvmUserControlRestore.Auxiliary.Converters
                writer.WriteNumber("Value", (int)value.Value);
                break;
             case "FirstViewModel":
+            case "SecondViewModel":
+            case "SelectorEnum":
+            case "ThirdViewModel":
+               #region Debug
+#if DEBUG
+               if (debugBranch > 0) AppHelper.DebugOut(debugBranch,
+                                                       $"{AppHelper.GetCallerMemberName(this)}",
+                                                       $"value.Type is {value.Type}.");
+#endif
+               #endregion Debug
                writer.WritePropertyName("Value");
                JsonSerializer.Serialize(writer, value.Value, options);
                break;

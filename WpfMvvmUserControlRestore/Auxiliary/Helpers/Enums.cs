@@ -1,4 +1,4 @@
-﻿//1.0.8991.*//
+﻿//1.0.8992.*:1.0.8991.*//
 using System.ComponentModel;
 
 namespace WpfMvvmUserControlRestore.Auxiliary.Helpers
@@ -6,7 +6,7 @@ namespace WpfMvvmUserControlRestore.Auxiliary.Helpers
    /// <summary>
    /// Перечисление ключей навигатора.
    /// </summary>
-   internal enum SelectorEnum
+   public enum SelectorEnum
    {
       /// <summary>Не выбран</summary>
       None = 0,

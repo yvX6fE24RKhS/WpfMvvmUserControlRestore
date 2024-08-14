@@ -1,6 +1,7 @@
-﻿//1.0.8991.*//
+﻿//1.0.8992.*:1.0.8991.*//
 using System.ComponentModel;
 using System.Reflection;
+using System.Windows.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using WpfMvvmUserControlRestore.Auxiliary.Helpers;
 using WpfMvvmUserControlRestore.Services.Settings.Abstractions;
@@ -17,14 +18,14 @@ namespace WpfMvvmUserControlRestore.ViewModels.Abstractions
       #region Debug
 #if DEBUG
 #pragma warning disable 0649
-      private static readonly int? debugBranch = 1;
+      private static readonly int? viewModelDebugBranch = 1;
 #pragma warning restore 0649
 #endif
       #endregion Debug
 
       private const string IndexerName = System.Windows.Data.Binding.IndexerName; /* "Item[]" */
 
-      private readonly ISettingsService? _settingsService;
+      protected readonly ISettingsService? _settingsService;
 
       /// <summary> Наблюдаемые свойства модели представления подлежащие сохранению. </summary>
       private readonly Dictionary<string, object> _values = [];
@@ -38,7 +39,7 @@ namespace WpfMvvmUserControlRestore.ViewModels.Abstractions
       {
          #region Debug
 #if DEBUG
-         if (debugBranch > 0) AppHelper.DebugOut(debugBranch, $"{AppHelper.GetCallerMemberName(this)}");
+         if (viewModelDebugBranch > 0) AppHelper.DebugOut(viewModelDebugBranch, $"{AppHelper.GetCallerMemberName(this)}");
 #endif
          #endregion Debug
          _settingsService = settingsService;
@@ -116,7 +117,7 @@ namespace WpfMvvmUserControlRestore.ViewModels.Abstractions
       {
          #region Debug
 #if DEBUG
-         if (debugBranch > 0) AppHelper.DebugOut(debugBranch, $"{AppHelper.GetCallerMemberName(this)}");
+         if (viewModelDebugBranch > 0) AppHelper.DebugOut(viewModelDebugBranch, $"{AppHelper.GetCallerMemberName(this)}");
 #endif
          #endregion Debug
          SettingsSave();
@@ -126,15 +127,16 @@ namespace WpfMvvmUserControlRestore.ViewModels.Abstractions
 
       #endregion Event Handlers
 
-
       #region Methods
 
       /// <summary> Метод восстановления свойств модели представления. </summary>
-      private void SettingsRestore()
+      protected virtual void SettingsRestore()
       {
          #region Debug
 #if DEBUG
-         if (debugBranch > 0) AppHelper.DebugOut(debugBranch, $"{AppHelper.GetCallerMemberName(this)}");
+         if (viewModelDebugBranch > 0) AppHelper.DebugOut(viewModelDebugBranch,
+                                                          $"{AppHelper.GetCallerMemberName(this)}",
+                                                          "Base method executing.");
 #endif
          #endregion Debug
          try
@@ -145,7 +147,7 @@ namespace WpfMvvmUserControlRestore.ViewModels.Abstractions
          {
             #region Debug
 #if DEBUG
-            AppHelper.DebugOut(debugBranch ?? 0,
+            AppHelper.DebugOut(viewModelDebugBranch ?? 0,
                                $"{AppHelper.GetCallerMemberName(this)}",
                                $"Error: {ex.Message}.");
 #endif
@@ -154,11 +156,13 @@ namespace WpfMvvmUserControlRestore.ViewModels.Abstractions
       }
 
       /// <summary> Метод сохранения свойств модели представления. </summary>
-      private void SettingsSave()
+      protected virtual void SettingsSave()
       {
          #region Debug
 #if DEBUG
-         if (debugBranch > 0) AppHelper.DebugOut(debugBranch, $"{AppHelper.GetCallerMemberName(this)}");
+         if (viewModelDebugBranch > 0) AppHelper.DebugOut(viewModelDebugBranch, 
+                                                          $"{AppHelper.GetCallerMemberName(this)}",
+                                                          "Base method executing.");
 #endif
          #endregion Debug
 

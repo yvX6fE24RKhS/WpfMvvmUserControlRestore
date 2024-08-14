@@ -1,4 +1,4 @@
-﻿//1.0.8991.*//
+﻿//1.0.8992.*:1.0.8991.*//
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -45,7 +45,7 @@ namespace WpfMvvmUserControlRestore.Services.Settings
       {
          #region Debug
 #if DEBUG
-         if (debugBranch > 0) AppHelper.DebugOut(debugBranch, $"{nameof(Serializer)}.{AppHelper.GetCallerName()}");
+         if (debugBranch > 0) AppHelper.DebugOut(debugBranch, $"{className}.{AppHelper.GetCallerName()}");
 #endif
          #endregion Debug
          try
@@ -58,7 +58,7 @@ namespace WpfMvvmUserControlRestore.Services.Settings
             #region Debug
 #if DEBUG
             AppHelper.DebugOut(debugBranch ?? 0,
-                               $"{nameof(Serializer)}.{AppHelper.GetCallerName()}",
+                               $"{className}.{AppHelper.GetCallerName()}",
                                $"Error: {ex.Message}.");
 #endif
             #endregion Debug
@@ -75,7 +75,7 @@ namespace WpfMvvmUserControlRestore.Services.Settings
       {
          #region Debug
 #if DEBUG
-         if (debugBranch > 0) AppHelper.DebugOut(debugBranch, $"{nameof(Serializer)}.{AppHelper.GetCallerName()}");
+         if (debugBranch > 0) AppHelper.DebugOut(debugBranch, $"{className}.{AppHelper.GetCallerName()}");
 #endif
          #endregion Debug
          try
@@ -96,7 +96,7 @@ namespace WpfMvvmUserControlRestore.Services.Settings
             #region Debug
 #if DEBUG
             AppHelper.DebugOut(debugBranch ?? 0,
-                               $"{nameof(Serializer)}.{AppHelper.GetCallerName()}",
+                               $"{className}.{AppHelper.GetCallerName()}",
                                $"Error: {ex.Message}.");
             return default;
 #endif
