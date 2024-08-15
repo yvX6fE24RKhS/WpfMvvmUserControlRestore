@@ -1,27 +1,43 @@
-﻿//1.0.8991.*//
-using System.Reflection;
-using System.Windows.Media;
+﻿//1.0.8993.*:1.0.8991.*//
 using CommunityToolkit.Mvvm.ComponentModel;
+using WpfMvvmUserControlRestore.Auxiliary.Helpers;
 
 namespace WpfMvvmUserControlRestore.ViewModels
 {
    internal partial class ThirdViewModel : ObservableObject
    {
-      [ObservableProperty]
-      /// <summary> Свойство для примера. </summary>
-      private Brush _thirdProperty = Brushes.Coral;
+      #region Fields
 
       [ObservableProperty]
-      private PropertyInfo? _selectedPropColor;
+      private SelectorEnum _selectedEnumItem = SelectorEnum.None;
 
-      public static IEnumerable<PropertyInfo> s_AllColors
-          = typeof(Brushes).GetProperties()
-              .Where(prop => prop.PropertyType == typeof(SolidColorBrush));
+      /// <summary>Словарь для экземпляров VM страниц</summary>
+      readonly Dictionary<SelectorEnum, object> _childViewModels = [];
 
-      public IEnumerable<PropertyInfo> AllColors => s_AllColors;
+      /// <summary>VM для текущей страницы</summary>
+      [ObservableProperty]
+      private object? _childViewModel;
 
-      partial void OnSelectedPropColorChanged(PropertyInfo? value)
-         => ThirdProperty = (Brush?)value?.GetValue(null) ?? Brushes.CadetBlue;
+      #endregion Fields
 
+      #region Constructors
+
+      /// <summary> Инициализирует экземпляр класса <see cref="MainViewModel"/>. </summary>
+      public ThirdViewModel()
+      {
+         _childViewModels.Add(SelectorEnum.First, new FirstViewModel());
+         _childViewModels.Add(SelectorEnum.Second, new SecondViewModel());
+      }
+
+      #endregion Constructors
+
+      #region Event Handlers
+
+      partial void OnSelectedEnumItemChanged(SelectorEnum value)
+         => ChildViewModel = _childViewModels.TryGetValue(value, out object? childViewModel)
+                             ? childViewModel
+                             : null;
+
+      #endregion Event Handlers
    }
 }

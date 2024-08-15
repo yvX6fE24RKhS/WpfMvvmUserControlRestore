@@ -1,4 +1,4 @@
-﻿<!--//1.0.8991.*//-->
+﻿<!--//1.0.8993.*:1.0.8991.*//-->
 <Window x:Class="WpfMvvmUserControlRestore.Views.MainView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -47,6 +47,5 @@
             </DataTemplate>
          </ContentPresenter.Resources>
       </ContentPresenter>
-
    </Grid>
 </Window>
