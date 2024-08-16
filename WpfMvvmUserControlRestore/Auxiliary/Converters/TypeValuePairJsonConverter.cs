@@ -1,4 +1,4 @@
-﻿//1.0.8992.*:1.0.8991.*//
+﻿//1.0.8994.*:1.0.8992.*//
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using WpfMvvmUserControlRestore.Auxiliary.Helpers;
@@ -12,8 +12,6 @@ namespace WpfMvvmUserControlRestore.Auxiliary.Converters
    /// </summary>
    internal class TypeValuePairJsonConverter : JsonConverter<TypeValuePair>
    {
-      #region Fields
-
       #region Debug
 #if DEBUG
 #pragma warning disable 0649
@@ -22,12 +20,14 @@ namespace WpfMvvmUserControlRestore.Auxiliary.Converters
 #endif
       #endregion Debug
 
+      #region Fields
+
       /// <summary> Список имен типов, допустимых для преобразования. </summary>
-      private readonly List<string> KnownTypes = [
-         "Int32", 
+      private readonly List<string> _knownTypes = [
          "FirstViewModel",
+         "Int32",
          "SecondViewModel",
-         "SelectorEnum", 
+         "SelectorEnum",
          "String",
          "ThirdViewModel"
       ];
@@ -40,6 +40,12 @@ namespace WpfMvvmUserControlRestore.Auxiliary.Converters
       /// <exception cref="JsonException"> Ошибка преобразования. </exception>
       public override TypeValuePair? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
       {
+         #region Debug
+#if DEBUG
+         if (debugBranch > 0) AppHelper.DebugOut(debugBranch, $"{AppHelper.GetCallerMemberName(this)}");
+#endif
+         #endregion Debug
+
          if (reader.TokenType != JsonTokenType.StartObject) throw new JsonException();
 
          reader.Read();
@@ -52,7 +58,7 @@ namespace WpfMvvmUserControlRestore.Auxiliary.Converters
          if (reader.TokenType != JsonTokenType.String) throw new JsonException();
 
          string? type = reader.GetString();
-         if (type == null || !KnownTypes.Contains(type)) throw new JsonException();
+         if (type == null || !_knownTypes.Contains(type)) throw new JsonException();
 
          TypeValuePair? tvp = null;
          object value = new();
@@ -78,7 +84,7 @@ namespace WpfMvvmUserControlRestore.Auxiliary.Converters
                      value = JsonSerializer.Deserialize<FirstViewModel>(ref reader)
                        ?? throw new NullReferenceException($"Ошибка десериализации. {type} не может быть null.");
                      break;
-                 case "SecondViewModel":
+                  case "SecondViewModel":
                      value = JsonSerializer.Deserialize<SecondViewModel>(ref reader)
                        ?? throw new NullReferenceException($"Ошибка десериализации. {type} не может быть null.");
                      break;
@@ -103,6 +109,12 @@ namespace WpfMvvmUserControlRestore.Auxiliary.Converters
       /// <inheritdoc/>
       public override void Write(Utf8JsonWriter writer, TypeValuePair value, JsonSerializerOptions options)
       {
+         #region Debug
+#if DEBUG
+         if (debugBranch > 0) AppHelper.DebugOut(debugBranch, $"{AppHelper.GetCallerMemberName(this)}");
+#endif
+         #endregion Debug
+
          writer.WriteStartObject();
 
          writer.WriteString("Type", value.Type);
@@ -117,9 +129,9 @@ namespace WpfMvvmUserControlRestore.Auxiliary.Converters
             case "ThirdViewModel":
                #region Debug
 #if DEBUG
-               if (debugBranch > 0) AppHelper.DebugOut(debugBranch,
-                                                       $"{AppHelper.GetCallerMemberName(this)}",
-                                                       $"value.Type is {value.Type}.");
+               if (debugBranch == 1) AppHelper.DebugOut(debugBranch,
+                                                        $"{AppHelper.GetCallerMemberName(this)}",
+                                                        $"value.Type is {value.Type}.");
 #endif
                #endregion Debug
                writer.WritePropertyName("Value");

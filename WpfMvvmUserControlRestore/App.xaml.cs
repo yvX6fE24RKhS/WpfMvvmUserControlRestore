@@ -1,4 +1,4 @@
-﻿//1.0.8991.*//
+﻿//1.0.8994.*:1.0.8991.*//
 using System.Runtime.Versioning;
 using System.Text;
 using System.Windows;
@@ -17,8 +17,6 @@ namespace WpfMvvmUserControlRestore
    /// </summary>
    public partial class App : Application
    {
-      #region Fields
-
       #region Debug
 #if DEBUG
 #pragma warning disable 0649
@@ -26,8 +24,6 @@ namespace WpfMvvmUserControlRestore
 #pragma warning restore 0649
 #endif
       #endregion Debug
-
-      #endregion Fields
 
       #region Constructors
 
@@ -53,7 +49,8 @@ namespace WpfMvvmUserControlRestore
 
       #region Event Handlers
 
-      // REMARKS: вариант обработчика необработанного события исключения
+      #region Remarks
+      // Вариант обработчика необработанного события исключения.
       ///// <summary> Обработчик события, которое генерируется при возникновении исключения, не обработанного ни одним доменом приложения. </summary>
       ///// <param name="sender"> Источник необработанного события исключения. </param>
       ///// <param name="e"> Аргументы, содержащие данные события. </param>
@@ -61,6 +58,7 @@ namespace WpfMvvmUserControlRestore
       //{
       //   // Обработать необработанное исключение
       //}
+      #endregion Remarks
 
       /// <summary> Обработчик исключения в потоке пользовательского интерфейса (диспетчер). </summary>
       /// <param name="sender"> Источник необработанного события исключения. </param>
@@ -118,10 +116,12 @@ namespace WpfMvvmUserControlRestore
 
          // Подписка на событие которое происходит, когда приложение создает исключение, но не обрабатывает его.
          DispatcherUnhandledException += OnDispatcherUnhandledException;
+         #region Remarks
          // Что аналогично XAML <Application DispatcherUnhandledException = "App_DispatcherUnhandledException"
          // или
          // Подписка на событие которое не обрабатывается доменом приложения.
          // AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(OnCurrentDomainUnhandledException);
+         #endregion Remarks
          #region Debug
 #if DEBUG
          AppHelper.DebugOut(debugBranch ?? 0,
@@ -155,7 +155,6 @@ namespace WpfMvvmUserControlRestore
                 .AddSingleton<ISettingsService, SettingsService>()
                 // View Models
                 .AddTransient<MainViewModel>()
-                .AddTransient<FirstViewModel>()
                 .BuildServiceProvider()
             );
 

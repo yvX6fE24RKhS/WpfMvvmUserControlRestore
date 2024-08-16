@@ -1,4 +1,4 @@
-﻿//1.0.8992.*:1.0.8991.*//
+﻿//1.0.8994.*:1.0.8992.*//
 using CommunityToolkit.Mvvm.ComponentModel;
 using WpfMvvmUserControlRestore.Auxiliary.Helpers;
 using WpfMvvmUserControlRestore.Services.Settings.Abstractions;
@@ -11,8 +11,6 @@ namespace WpfMvvmUserControlRestore.ViewModels
    /// </summary>
    internal sealed partial class MainViewModel : ViewModel
    {
-      #region Fields
-
       #region Debug
 #if DEBUG
 #pragma warning disable 0649
@@ -20,6 +18,8 @@ namespace WpfMvvmUserControlRestore.ViewModels
 #pragma warning restore 0649
 #endif
       #endregion Debug
+
+      #region Fields
 
       /// <summary> Версия текущей сборки приложения. </summary>
       [ObservableProperty]
@@ -84,6 +84,7 @@ namespace WpfMvvmUserControlRestore.ViewModels
                break;
             case SelectorEnum.Third:
                ChildViewModel = _settingsService?.GetValue<ThirdViewModel>("ChildViewModel");
+               _childViewModels[SelectorEnum.Third] = ChildViewModel ?? new ThirdViewModel();
                break;
             default:
                break;

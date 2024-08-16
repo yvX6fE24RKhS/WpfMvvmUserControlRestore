@@ -1,9 +1,12 @@
-﻿//1.0.8993.*:1.0.8991.*//
+﻿//1.0.8994.*:1.0.8993.*//
+using System.Text.Json.Serialization;
 using CommunityToolkit.Mvvm.ComponentModel;
+using WpfMvvmUserControlRestore.Auxiliary.Converters;
 using WpfMvvmUserControlRestore.Auxiliary.Helpers;
 
 namespace WpfMvvmUserControlRestore.ViewModels
 {
+   [JsonConverter(typeof(ThirdViewModelJsonConverter))]
    internal partial class ThirdViewModel : ObservableObject
    {
       #region Fields
@@ -22,11 +25,25 @@ namespace WpfMvvmUserControlRestore.ViewModels
 
       #region Constructors
 
-      /// <summary> Инициализирует экземпляр класса <see cref="MainViewModel"/>. </summary>
+      /// <summary> Инициализирует экземпляр класса <see cref="ThirdViewModel"/>. </summary>
       public ThirdViewModel()
       {
-         _childViewModels.Add(SelectorEnum.First, new FirstViewModel());
-         _childViewModels.Add(SelectorEnum.Second, new SecondViewModel());
+         _childViewModels.TryAdd(SelectorEnum.First, new FirstViewModel());
+         _childViewModels.TryAdd(SelectorEnum.Second, new SecondViewModel());
+      }
+
+      /// <summary> Инициализирует экземпляр класса <see cref="ThirdViewModel"/>. </summary>
+      [JsonConstructor]
+      public ThirdViewModel(object? childViewModel, SelectorEnum selectedEnumItem)
+      {
+         _childViewModels.TryAdd(
+            SelectorEnum.First, 
+            (selectedEnumItem == SelectorEnum.First) ? childViewModel ?? new FirstViewModel() : new FirstViewModel());
+         _childViewModels.TryAdd(
+            SelectorEnum.Second,
+            (selectedEnumItem == SelectorEnum.Second) ? childViewModel ?? new SecondViewModel() : new SecondViewModel());
+         ChildViewModel = childViewModel;
+         SelectedEnumItem = selectedEnumItem;
       }
 
       #endregion Constructors

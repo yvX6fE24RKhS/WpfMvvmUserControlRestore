@@ -1,7 +1,9 @@
-﻿//1.0.8992.*:1.0.8991.*//
+﻿//1.0.8994.*:1.0.8992.*//
 using System.IO;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Unicode;
 using WpfMvvmUserControlRestore.Auxiliary.Helpers;
 
 namespace WpfMvvmUserControlRestore.Services.Settings
@@ -11,8 +13,6 @@ namespace WpfMvvmUserControlRestore.Services.Settings
    /// </summary>
    internal static class Serializer
    {
-      #region Fields
-
       #region Debug
 #if DEBUG
 #pragma warning disable 0649
@@ -21,11 +21,14 @@ namespace WpfMvvmUserControlRestore.Services.Settings
 #endif
       #endregion Debug
 
+      #region Fields
+
       static readonly string className = typeof(Serializer).FullName!;
 
       /// <summary> Настройки преобразователя сериализатора. </summary>
       static readonly JsonSerializerOptions jsonSerializerOptions = new()
       {
+         Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
          DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
          IgnoreReadOnlyProperties = true,
          UnknownTypeHandling = JsonUnknownTypeHandling.JsonNode,
