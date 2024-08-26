@@ -1,8 +1,9 @@
-﻿//1.0.8994.*//
+﻿//1.0.9004.*:1.0.8994.*//
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using WpfMvvmUserControlRestore.Auxiliary.Helpers;
 using WpfMvvmUserControlRestore.ViewModels;
+using WpfMvvmUserControlRestore.ViewModels.Abstractions;
 
 namespace WpfMvvmUserControlRestore.Auxiliary.Converters
 {
@@ -32,11 +33,12 @@ namespace WpfMvvmUserControlRestore.Auxiliary.Converters
          if (reader.TokenType != JsonTokenType.StartObject) throw new JsonException("Expected StartObject token.");
 
          SelectorEnum selectedEnumItem = SelectorEnum.None;
-         object? childViewModel = null;
+         ISelectedViewModel? childViewModel = null;
+         string overallProperty = "";
          while (reader.Read())
          {
             if (reader.TokenType == JsonTokenType.EndObject)
-               return new ThirdViewModel(childViewModel, selectedEnumItem);
+               return new ThirdViewModel(childViewModel, selectedEnumItem, overallProperty);
 
             if (reader.TokenType != JsonTokenType.PropertyName) throw new JsonException("Expected PropertyName token.");
 
@@ -67,6 +69,9 @@ namespace WpfMvvmUserControlRestore.Auxiliary.Converters
                         break;
                   }
                   break;
+               case nameof(ThirdViewModel.OverallProperty):
+                  overallProperty = JsonSerializer.Deserialize<string>(ref reader) ?? "";
+                  break;
                default:
                   break;
             }
@@ -91,8 +96,28 @@ namespace WpfMvvmUserControlRestore.Auxiliary.Converters
          //writer.WriteNumber(nameof(ThirdViewModel.SelectedEnumItem), (int)value.SelectedEnumItem);
          #endregion Remarks
 
-         writer.WritePropertyName(nameof(ThirdViewModel.ChildViewModel));
-         JsonSerializer.Serialize(writer, value.ChildViewModel, options);
+         switch (value.SelectedEnumItem)
+         {
+            case SelectorEnum.None:
+               break;
+            case SelectorEnum.First:
+               writer.WritePropertyName(nameof(ThirdViewModel.ChildViewModel));
+               JsonSerializer.Serialize(writer, value.ChildViewModel as FirstViewModel, options);
+               break;
+            case SelectorEnum.Second:
+               writer.WritePropertyName(nameof(ThirdViewModel.ChildViewModel));
+               JsonSerializer.Serialize(writer, value.ChildViewModel as SecondViewModel, options);
+               break;
+            case SelectorEnum.Third:
+               writer.WritePropertyName(nameof(ThirdViewModel.ChildViewModel));
+               JsonSerializer.Serialize(writer, value.ChildViewModel as ThirdViewModel, options);
+               break;
+            default:
+               break;
+         }
+
+         writer.WritePropertyName(nameof(ThirdViewModel.OverallProperty));
+         JsonSerializer.Serialize(writer, value.OverallProperty.ToString(), options);
 
          writer.WriteEndObject();
       }
