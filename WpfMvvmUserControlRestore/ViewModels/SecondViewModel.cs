@@ -4,7 +4,7 @@ using WpfMvvmUserControlRestore.ViewModels.Abstractions;
 
 namespace WpfMvvmUserControlRestore.ViewModels
 {
-   internal partial class SecondViewModel() : SelectedViewModel("")
+   internal partial class SecondViewModel() : SelectedViewModel()
    {
       [ObservableProperty]
       /// <summary> Свойство для примера. </summary>

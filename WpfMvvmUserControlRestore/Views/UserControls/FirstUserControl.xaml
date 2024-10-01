@@ -1,10 +1,11 @@
-﻿<!--//1.0.9004.*:1.0.8991.*//-->
+﻿<!--//1.0.9040.*:1.0.9004.*//-->
 <UserControl x:Class="WpfMvvmUserControlRestore.Views.UserControls.FirstUserControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfMvvmUserControlRestore.Views.UserControls"
+             xmlns:apx="clr-namespace:Apex.Controls"
              xmlns:vm="clr-namespace:WpfMvvmUserControlRestore.ViewModels"
              mc:Ignorable="d" 
              d:DataContext="{x:Type vm:FirstViewModel}"
@@ -12,18 +13,70 @@
              d:DesignWidth="300"
              >
    <Grid Background="AliceBlue">
-      <Grid.RowDefinitions>
-         <RowDefinition Height="Auto" />
-         <RowDefinition Height="*" />
-      </Grid.RowDefinitions>
-      <Border Grid.Row="0" Width="Auto" BorderThickness="2" BorderBrush="Black">
-         <StackPanel Orientation="Horizontal" Background="Bisque">
-            <TextBlock Text="OverallProperty: " Margin="3" />
-            <TextBox Text="{Binding OverallProperty}" Margin="3" Width="50" />
-         </StackPanel>
-      </Border>
-      <TextBox Grid.Row="1"
-               Text="{Binding FirstProperty}"
-               VerticalAlignment="Center" Margin="10"/>
+      <apx:ApexGrid Rows="Auto, Auto, Auto, Auto, *">
+         <Border Grid.Row="0" Width="Auto" BorderThickness="2" BorderBrush="Black">
+            <TextBlock Text="FirstUserControl: " Margin="3" Foreground="Blue"/>
+         </Border>
+         <Border Grid.Row="1" Width="Auto" BorderThickness="2" BorderBrush="Black">
+            <StackPanel Orientation="Vertical" Background="Bisque">
+               <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="Сериализуемое свойство, общее для выбираемых моделей представления: " Margin="3" />
+                  <TextBox Text="{Binding SerializablePropertyCommonToSelectedViewModels}" Margin="3" Width="50" />
+               </StackPanel>
+               <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="Несериализуемое свойство, общее для выбираемых моделей представления: " Margin="3" />
+                  <TextBox Text="{Binding NonserializablePropertyCommonToSelectedViewModels}" Margin="3" Width="50" />
+               </StackPanel>
+               <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="Сериализуемое свойство конкретной модели представления: " Margin="3" />
+                  <TextBox Text="{Binding SerializablePropertyFirstViewModel}" Margin="3" Width="50" />
+               </StackPanel>
+               <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="Несериализуемое свойство конкретной модели представления: " Margin="3" />
+                  <TextBox Text="{Binding NonserializablePropertyFirstViewModel}" Margin="3" Width="50" />
+               </StackPanel>
+            </StackPanel>
+         </Border>
+         <Border Grid.Row="2" Width="Auto" BorderThickness="2" BorderBrush="Black">
+            <StackPanel Orientation="Vertical" Background="Chartreuse">
+               <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="Сериализуемое свойство, общее для выбираемых моделей: " Margin="3" />
+                  <TextBox Text="{Binding SelectedModel.SerializablePropertyCommonToSelectedModels}" Margin="3" Width="50" />
+               </StackPanel>
+               <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="Несериализуемое свойство, общее для выбираемых моделей: " Margin="3" />
+                  <TextBox Text="{Binding SelectedModel.NonserializablePropertyCommonToSelectedModels}" Margin="3" Width="50" />
+               </StackPanel>
+               <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="Сериализуемое свойство конкретной модели: " Margin="3" />
+                  <TextBox Text="{Binding SelectedModel.SerializablePropertyFirstModel}" Margin="3" Width="50" />
+               </StackPanel>
+               <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="Несериализуемое свойство конкретной модели: " Margin="3" />
+                  <TextBox Text="{Binding SelectedModel.NonserializablePropertyFirstModel}" Margin="3" Width="50" />
+               </StackPanel>
+            </StackPanel>
+         </Border>
+         <Border Grid.Row="3" Width="Auto" BorderThickness="2" BorderBrush="Black">
+            <StackPanel Orientation="Vertical" Background="Gainsboro">
+               <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="Сериализуемое свойство, общее для настроек модели: " Margin="3" />
+                  <TextBox Text="{Binding SelectedModel.SerializablePropertyCommonToModelSettings}" Margin="3" Width="50" />
+               </StackPanel>
+               <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="Несериализуемое свойство, общее для настроек модели: " Margin="3" />
+                  <TextBox Text="{Binding SelectedModel.ModelSettings.NonserializablePropertyCommonToModelSettings}" Margin="3" Width="50" />
+               </StackPanel>
+               <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="Сериализуемое свойство, для настроек конкретной модели: " Margin="3" />
+                  <TextBox Text="{Binding SelectedModel.ModelSettings.SerializablePropertyFirstModeSettings}" Margin="3" Width="50" />
+               </StackPanel>
+               <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="Несериализуемое свойство, для настроек конкретной модели: " Margin="3" />
+                  <TextBox Text="{Binding SelectedModel.ModelSettings.NonserializablePropertyFirstModeSettings}" Margin="3" Width="50" />
+               </StackPanel>
+            </StackPanel>
+         </Border>
+      </apx:ApexGrid>
    </Grid>
 </UserControl>

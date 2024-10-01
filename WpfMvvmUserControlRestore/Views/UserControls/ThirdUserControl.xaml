@@ -1,10 +1,11 @@
-﻿<!--//1.0.9004.*:1.0.8993.*//-->
+﻿<!--//1.0.9040.*:1.0.9004.*//-->
 <UserControl x:Class="WpfMvvmUserControlRestore.Views.UserControls.ThirdUserControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfMvvmUserControlRestore.Views.UserControls"
+             xmlns:apx="clr-namespace:Apex.Controls"
              xmlns:vm="clr-namespace:WpfMvvmUserControlRestore.ViewModels"
              xmlns:uc="clr-namespace:WpfMvvmUserControlRestore.Views.UserControls"
              xmlns:enums="clr-namespace:WpfMvvmUserControlRestore.Auxiliary.Helpers"
@@ -21,36 +22,33 @@
    </UserControl.Resources>
    <Border Background="Aqua" Margin="5" Padding="5">
       <Grid>
-         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-         </Grid.RowDefinitions>
-         <Border Grid.Row="0" Width="Auto" BorderThickness="2" BorderBrush="Black">
-            <StackPanel Orientation="Horizontal" Background="Bisque">
-               <TextBlock Text="OverallProperty: " Margin="1" />
-               <TextBox Text="{Binding OverallProperty}" Margin="1" Width="50" />
-            </StackPanel>
-         </Border>
-         <Rectangle Grid.Row="1" Fill="Aquamarine" />
-         <ComboBox Grid.Row="1"
+         <apx:ApexGrid Rows="Auto, Auto, *">
+            <Border Grid.Row="0" Width="Auto" BorderThickness="2" BorderBrush="Black">
+               <StackPanel Orientation="Horizontal" Background="Bisque">
+                  <TextBlock Text="OverallProperty: " Margin="1" />
+                  <TextBox Text="{Binding OverallProperty}" Margin="1" Width="50" />
+               </StackPanel>
+            </Border>
+            <Rectangle Grid.Row="1" Fill="Aquamarine" />
+            <ComboBox Grid.Row="1"
                 IsEditable="False"
                 ItemsSource="{StaticResource EnumConverter}"
                 SelectedValue="{Binding SelectedEnumItem,
                 Converter={StaticResource EnumConverter}}" />
-         <ContentPresenter Grid.Row="2" Content="{Binding ChildViewModel}">
-            <ContentPresenter.Resources>
-               <DataTemplate DataType="{x:Type vm:FirstViewModel}">
-                  <uc:FirstUserControl/>
-               </DataTemplate>
-               <DataTemplate DataType="{x:Type vm:SecondViewModel}">
-                  <uc:SecondUserControl/>
-               </DataTemplate>
-               <DataTemplate DataType="{x:Type vm:ThirdViewModel}">
-                  <uc:ThirdUserControl/>
-               </DataTemplate>
-            </ContentPresenter.Resources>
-         </ContentPresenter>
+            <ContentPresenter Grid.Row="2" Content="{Binding ChildViewModel}">
+               <ContentPresenter.Resources>
+                  <DataTemplate DataType="{x:Type vm:FirstViewModel}">
+                     <uc:FirstUserControl/>
+                  </DataTemplate>
+                  <DataTemplate DataType="{x:Type vm:SecondViewModel}">
+                     <uc:SecondUserControl/>
+                  </DataTemplate>
+                  <DataTemplate DataType="{x:Type vm:ThirdViewModel}">
+                     <uc:ThirdUserControl/>
+                  </DataTemplate>
+               </ContentPresenter.Resources>
+            </ContentPresenter>
+         </apx:ApexGrid>
       </Grid>
    </Border>
 </UserControl>

@@ -27,7 +27,7 @@ namespace WpfMvvmUserControlRestore.ViewModels
       #region Constructors
 
       /// <summary> Инициализирует экземпляр класса <see cref="ThirdViewModel"/>. </summary>
-      public ThirdViewModel() : base("")
+      public ThirdViewModel() //: base()
       {
          _childViewModels.TryAdd(SelectorEnum.First, new FirstViewModel());
          _childViewModels.TryAdd(SelectorEnum.Second, new SecondViewModel());
@@ -35,7 +35,7 @@ namespace WpfMvvmUserControlRestore.ViewModels
 
       /// <summary> Инициализирует экземпляр класса <see cref="ThirdViewModel"/>. </summary>
       [JsonConstructor]
-      public ThirdViewModel(ISelectedViewModel? childViewModel, SelectorEnum selectedEnumItem, string overallProperty) : base(overallProperty)
+      public ThirdViewModel(ISelectedViewModel? childViewModel, SelectorEnum selectedEnumItem, string overallProperty) //: base(overallProperty)
       {
          _childViewModels.TryAdd(
             SelectorEnum.First, 

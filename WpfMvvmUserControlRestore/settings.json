@@ -1,0 +1,20 @@
+{
+  "Values": {
+    "MainViewHeight": {
+      "Type": "String",
+      "Value": "400"
+    },
+    "MainViewWidth": {
+      "Type": "String",
+      "Value": "687"
+    },
+    "MainViewLeft": {
+      "Type": "String",
+      "Value": "NaN"
+    },
+    "MainViewTop": {
+      "Type": "String",
+      "Value": "NaN"
+    }
+  }
+}

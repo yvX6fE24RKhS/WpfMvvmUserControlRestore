@@ -1,4 +1,4 @@
-﻿//1.0.9004.*:1.0.8994.*//
+﻿//1.0.9040.*:1.0.9004.*//
 using CommunityToolkit.Mvvm.ComponentModel;
 using WpfMvvmUserControlRestore.Auxiliary.Helpers;
 using WpfMvvmUserControlRestore.Services.Settings.Abstractions;
@@ -13,9 +13,9 @@ namespace WpfMvvmUserControlRestore.ViewModels
    {
       #region Debug
 #if DEBUG
-#pragma warning disable 0649
+#pragma warning disable
       private static readonly int? mainViewModelDebugBranch = 1;
-#pragma warning restore 0649
+#pragma warning restore
 #endif
       #endregion Debug
 
@@ -28,10 +28,10 @@ namespace WpfMvvmUserControlRestore.ViewModels
       [ObservableProperty]
       private SelectorEnum _selectedEnumItem = SelectorEnum.None;
 
-      /// <summary>Словарь для экземпляров VM страниц</summary>
+      /// <summary> Словарь для экземпляров выбираемых моделей представления. </summary>
       readonly Dictionary<SelectorEnum, ISelectedViewModel> _childViewModels = [];
 
-      /// <summary>VM для текущей страницы</summary>
+      /// <summary> Текущая модель представления. </summary>
       [ObservableProperty]
       private ISelectedViewModel? _childViewModel;
 
@@ -43,8 +43,8 @@ namespace WpfMvvmUserControlRestore.ViewModels
       public MainViewModel(ISettingsService settingsService) : base(settingsService)
       {
          _childViewModels.TryAdd(SelectorEnum.First, new FirstViewModel());
-         _childViewModels.TryAdd(SelectorEnum.Second, new SecondViewModel());
-         _childViewModels.TryAdd(SelectorEnum.Third, new ThirdViewModel());
+//         _childViewModels.TryAdd(SelectorEnum.Second, new SecondViewModel());
+//         _childViewModels.TryAdd(SelectorEnum.Third, new ThirdViewModel());
       }
 
       #endregion Constructors
@@ -78,14 +78,14 @@ namespace WpfMvvmUserControlRestore.ViewModels
                ChildViewModel = _settingsService?.GetValue<FirstViewModel>("ChildViewModel");
                _childViewModels[SelectorEnum.First] = ChildViewModel as FirstViewModel ?? new FirstViewModel();
                break;
-            case SelectorEnum.Second:
-               ChildViewModel = _settingsService?.GetValue<SecondViewModel>("ChildViewModel");
-               _childViewModels[SelectorEnum.Second] = ChildViewModel as SecondViewModel ?? new SecondViewModel();
-               break;
-            case SelectorEnum.Third:
-               ChildViewModel = _settingsService?.GetValue<ThirdViewModel>("ChildViewModel");
-               _childViewModels[SelectorEnum.Third] = ChildViewModel as ThirdViewModel ?? new ThirdViewModel();
-               break;
+            //case SelectorEnum.Second:
+            //   ChildViewModel = _settingsService?.GetValue<SecondViewModel>("ChildViewModel");
+            //   _childViewModels[SelectorEnum.Second] = ChildViewModel as SecondViewModel ?? new SecondViewModel();
+            //   break;
+            //case SelectorEnum.Third:
+            //   ChildViewModel = _settingsService?.GetValue<ThirdViewModel>("ChildViewModel");
+            //   _childViewModels[SelectorEnum.Third] = ChildViewModel as ThirdViewModel ?? new ThirdViewModel();
+            //   break;
             default:
                break;
          }

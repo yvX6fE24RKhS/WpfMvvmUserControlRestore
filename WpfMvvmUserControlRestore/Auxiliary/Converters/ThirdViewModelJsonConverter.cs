@@ -69,9 +69,9 @@ namespace WpfMvvmUserControlRestore.Auxiliary.Converters
                         break;
                   }
                   break;
-               case nameof(ThirdViewModel.OverallProperty):
-                  overallProperty = JsonSerializer.Deserialize<string>(ref reader) ?? "";
-                  break;
+               //case nameof(ThirdViewModel.OverallProperty):
+               //   overallProperty = JsonSerializer.Deserialize<string>(ref reader) ?? "";
+               //   break;
                default:
                   break;
             }
@@ -116,8 +116,8 @@ namespace WpfMvvmUserControlRestore.Auxiliary.Converters
                break;
          }
 
-         writer.WritePropertyName(nameof(ThirdViewModel.OverallProperty));
-         JsonSerializer.Serialize(writer, value.OverallProperty.ToString(), options);
+         //writer.WritePropertyName(nameof(ThirdViewModel.OverallProperty));
+         //JsonSerializer.Serialize(writer, value.OverallProperty.ToString(), options);
 
          writer.WriteEndObject();
       }
